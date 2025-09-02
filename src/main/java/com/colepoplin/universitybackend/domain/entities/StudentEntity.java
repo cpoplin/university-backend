@@ -30,6 +30,6 @@ public class StudentEntity {
     , mappedBy = "student")
     private List<StudentEnrollmentEntity> enrollments;
 
-    // will contain the instance of every other entity
+    // will contain the instance of many other entities
 
 }

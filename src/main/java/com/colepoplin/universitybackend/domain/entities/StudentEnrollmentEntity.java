@@ -23,5 +23,7 @@ public class StudentEnrollmentEntity {
     @JoinColumn(name = "student_id")
     private StudentEntity student;
 
-    private Long courseId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private CourseEntity course;
 }
