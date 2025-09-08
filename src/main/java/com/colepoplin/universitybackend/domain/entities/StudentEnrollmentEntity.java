@@ -1,5 +1,6 @@
 package com.colepoplin.universitybackend.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +22,18 @@ public class StudentEnrollmentEntity {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     @JoinColumn(name = "student_id")
+    @JsonBackReference
     private StudentEntity student;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private CourseEntity course;
+
+    //might want to set this to behave in a way that a student is
+    //initialized in a course with this false as a method, with another
+    //method to set it to true when the student completed the course
+    private boolean isCompleted;
+
+    //likely to be null much of the time;
+    private float grade;
 }

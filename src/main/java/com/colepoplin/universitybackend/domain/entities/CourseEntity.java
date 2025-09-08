@@ -21,8 +21,4 @@ public class CourseEntity {
 
     private String courseName;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
-    @JoinColumn(name = "enrollment_id")
-    private StudentEnrollmentEntity enrollment;
-
 }

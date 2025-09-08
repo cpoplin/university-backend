@@ -14,7 +14,12 @@ public class StudentEnrollmentDto {
 
     private Long enrollmentId;
 
-    private StudentDto student;
+    //private StudentDto student;
+    //causes infinite recursion
 
     private CourseDto course;
+
+    private boolean isCompleted;
+
+    private float grade;
 }

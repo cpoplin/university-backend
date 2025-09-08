@@ -14,6 +14,4 @@ public class CourseDto {
     private Long courseId;
 
     private String courseName;
-
-    private StudentEnrollmentDto enrollment;
 }

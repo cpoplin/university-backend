@@ -5,7 +5,9 @@ import com.colepoplin.universitybackend.domain.entities.CourseEntity;
 import com.colepoplin.universitybackend.mappers.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CourseMapperImpl implements Mapper<CourseEntity, CourseDto> {
 
     @Autowired
