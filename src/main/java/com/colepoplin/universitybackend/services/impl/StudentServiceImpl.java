@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -24,5 +25,21 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> getAllStudents() {
         List<StudentEntity> studentEntities = studentRepository.findAll();;
         return studentEntities.stream().map(studentMapper::mapToDto).toList();
+    }
+
+    @Override
+    public Optional<StudentDto> findOne(Long id) {
+        return studentRepository.findById(id).map(studentMapper::mapToDto);
+    }
+
+    @Override
+    public boolean ifExists(Long id) {
+        return studentRepository.existsById(id);
+    }
+
+    @Override
+    public StudentDto partialUpdate(Long id, StudentDto studentDto) {
+        return null;
+        //current job
     }
 }
