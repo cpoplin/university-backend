@@ -13,4 +13,10 @@ public interface StudentService {
     boolean ifExists(Long id);
 
     StudentDto partialUpdate(Long id, StudentDto studentDto);
+
+    StudentDto updateEnrollment(Long id);
+
+    StudentDto createStudent(StudentDto studentDto);
+
+    void deleteStudent(Long id);
 }

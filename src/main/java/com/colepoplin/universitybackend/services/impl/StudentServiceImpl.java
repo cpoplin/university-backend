@@ -6,6 +6,8 @@ import com.colepoplin.universitybackend.mappers.Mapper;
 import com.colepoplin.universitybackend.repositories.StudentRepository;
 import com.colepoplin.universitybackend.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private Mapper<StudentEntity, StudentDto> studentMapper;
+
+    @Override
+    public StudentDto createStudent(StudentDto studentDto){
+        StudentEntity studentEntity = studentMapper.mapToEntity(studentDto);
+        studentRepository.save(studentEntity);
+        return studentMapper.mapToDto(studentEntity);
+    }
+
+    @Override
+    public void deleteStudent(Long id) {
+        studentRepository.deleteById(id);
+    }
 
     @Override
     public List<StudentDto> getAllStudents() {
@@ -39,7 +53,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto partialUpdate(Long id, StudentDto studentDto) {
-        return null;
-        //current job
+        return studentRepository.findById(id).map(existingEntity ->{
+            Optional.ofNullable(studentDto.getEmail()).ifPresent(existingEntity::setEmail);
+            Optional.ofNullable(studentDto.getName()).ifPresent(existingEntity::setName);
+            StudentEntity savedStudentEntity = studentRepository.save(existingEntity);
+            return studentMapper.mapToDto(savedStudentEntity);
+        }).orElseThrow(()-> new RuntimeException("Student partial Update Failed, it should not fail here there are checks before this"));
+    }
+
+    @Override
+    public StudentDto updateEnrollment(Long id) {
+        return studentRepository.findById(id).map(existingEntity ->{
+            if(existingEntity.isEnrolled()){
+                existingEntity.setEnrolled(false);
+            }
+            else{
+                existingEntity.setEnrolled(true);
+            }
+            StudentEntity savedStudentEntity = studentRepository.save(existingEntity);
+            return studentMapper.mapToDto(savedStudentEntity);
+        }).orElseThrow(()-> new RuntimeException("Student update enrollment Failed, it should not fail here there are checks before this"));
+        //test this
     }
 }
